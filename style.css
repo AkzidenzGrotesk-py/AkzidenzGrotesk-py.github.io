@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Brygada+1918:wght@400;700&family=Work+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+* {-moz-osx-font-smoothing: grayscale;box-sizing: border-box;}
+html, body {margin: 0;padding: 0;}
+body {margin: 16px 15% 16px 15%;}
+
+nav {margin-bottom: 16px;font-family: "Work Sans", sans-serif;border-bottom: 1px solid black;}
+nav ul {list-style-type: none;margin: 0;padding: 0;overflow: hidden;}
+nav li {float: left;}
+nav li a {display: block;color: black;text-align: center;padding: 8px 12px;text-decoration: none;font-weight: 700;}
+nav li a:hover {font-style: italic;}
+nav .active {text-decoration: underline;}
+
+main {font-family: "Work Sans", sans-serif;}
+main h1, main h2, main h3 {font-family: "Brygada 1918", serif;margin-bottom: 4px;letter-spacing: 8px;}
+main .code {border: 1px solid #ccc;font-family: monospace;padding: 6px;}
+main ul {margin: 0;}
+main .welcome {text-align:center;margin-top: 20%;}
+main .welcome h1 {font-size: 64px;line-height:50px;}
+main .welcome .sub {font-size: 24px;}
+main .welcome a {text-decoration: none; font-size: 16px; color: #000000;}
+main .welcome a:hover {text-decoration: underline;}
+main .welcome .cta {font-size:20px;}
+main .about_me {margin-top: 10%;}
+main .about_me h1 {text-align:center;color:#bf360c;}
+main .about_me .blurb {font-family: "Work Sans";line-height: 2;}
+main .about_me .mail {font-size: 18px;}
+main .about_me a {color: #000;}
+main .projects {margin: 24px 32px 24px 32px;}
+main .projects h2 {text-align: center; letter-spacing: 2;}
+main .project-listing {border-bottom: 1px solid black;margin-top: 16px;}
+main .project-listing h4 {font-size: 20px;margin: 0;}
+main .project-listing h5 {font-size: 14px;margin: 0;font-style: italic;font-weight: 400;}
+main .project-listing p {margin: 4px 0px;}
+main details > summary {font-weight: bold;margin-bottom: 4px;}
+main details > ul {margin: 0;}
+
+footer {margin-top: 72px;font-family: "Work Sans", sans-serif;border-top: 1px solid black;padding-top: 16px;}
+footer .copy {text-align: center; font-style: italic;}
+footer .linklist {margin: auto;width: 50%;}
+footer ul {list-style-type: none; margin: 0;padding: 0; overflow: hidden;margin-top: 8px;}
+footer li {float: left;}
+footer li a {display: block;text-align: center;padding: 2px 4px 2px 8px;}
