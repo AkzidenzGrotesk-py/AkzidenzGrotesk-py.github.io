@@ -14,7 +14,7 @@ main {font-family: "Work Sans", sans-serif;}
 main h1, main h2, main h3 {font-family: "Brygada 1918", serif;margin-bottom: 4px;letter-spacing: 8px;}
 main .code {border: 1px solid #ccc;font-family: monospace;padding: 6px;}
 main ul {margin: 0;}
-main .portfolio h1, main .portfolio h3 {letter-spacing: 1;margin-bottom: 4px;}
+main .portfolio h1, main .portfolio h3 {letter-spacing: normal;margin-bottom: 4px;}
 main .welcome {text-align:center;margin-top: 20%;}
 main .welcome h1 {font-size: 64px;line-height:50px;}
 main .welcome .sub {font-size: 24px;}
