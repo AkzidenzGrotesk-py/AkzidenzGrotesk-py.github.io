@@ -1,3 +1,3 @@
-# AkzidenzGrotesk-py.github.io
+Please visit, [https://akzidenzgrotesk-py.github.io/](https://akzidenzgrotesk-py.github.io/).
 
-Website!
+*Yes, this site is written badly. Go away :(*
