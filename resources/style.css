@@ -4,7 +4,7 @@
   src: url(https://github.com/AkzidenzGrotesk-py/TypeDesign/raw/main/pre/Sarpa.ttf);
 }
 * {-moz-osx-font-smoothing: grayscale;box-sizing: border-box;}
-html, body {margin: 0;padding: 0;}
+html, body {margin: 0;padding: 0;background: #eee;}
 body {margin: 16px 15% 16px 15%;}
 
 nav {margin-bottom: 16px;font-family: "Work Sans", sans-serif;border-bottom: 1px solid black;}
