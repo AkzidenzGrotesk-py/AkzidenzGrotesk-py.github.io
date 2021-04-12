@@ -52,3 +52,4 @@ footer li a:hover {color: #333;}
   main .welcome h1 {font-size: 32px;line-height:50px;}
   main .projects {margin: 24px 8px 24px 8px;}
 }
+html[theme='dark-mode'] {filter: invert(1) hue-rotate(180deg);}
