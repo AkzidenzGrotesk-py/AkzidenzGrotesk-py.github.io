@@ -44,4 +44,6 @@ footer .copy {text-align: center; font-style: italic;}
 footer .linklist {margin: auto;width: 50%;}
 footer ul {list-style-type: none; margin: 0;padding: 0; overflow: hidden;margin-top: 8px;}
 footer li {float: left;}
-footer li a {display: block;text-align: center;padding: 2px 4px 2px 8px;}
+footer li a:link {display: block;text-align: center;padding: 2px 4px 2px 8px;color: black;}
+footer li a:visited {color: black;}
+footer li a:hover {color: #333;}
