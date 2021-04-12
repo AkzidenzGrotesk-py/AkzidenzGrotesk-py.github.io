@@ -37,6 +37,8 @@ function toggleDarkMode() {
 
 // Cookie system (onload="handleCookies()")
 function handleCookies() {
+  console.log("page loaded... handling cookies");
+  HTMLelement = document.documentElement;
   theme = getCookie("theme");
   if (theme == "light-mode" || theme == "") {
     HTMLelement.setAttribute("theme", "light-mode");
