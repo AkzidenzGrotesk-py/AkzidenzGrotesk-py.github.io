@@ -25,19 +25,19 @@ function setCookie(cname, cvalue, exdays) {
 
 // Dark mode toggle
 function toggleDarkMode() {
-  HTMLelement = document.documentElement
+  HTMLelement = document.documentElement;
   if (HTMLelement.getAttribute("theme") != "dark-mode") {
     HTMLelement.setAttribute("theme", "dark-mode");
-    setCookie("theme","dark-mode",10000);
+    setCookie("theme","dark-mode",365);
   } else {
     HTMLelement.setAttribute("theme", "light-mode");
-    setCookie("theme","light-mode",10000);
+    setCookie("theme","light-mode",365);
   }
 }
 
 // Cookie system (onload="handleCookies()")
 function handleCookies() {
-  theme = getCookie("theme")
+  theme = getCookie("theme");
   if (theme == "light-mode" || theme == "") {
     HTMLelement.setAttribute("theme", "light-mode");
   } 
