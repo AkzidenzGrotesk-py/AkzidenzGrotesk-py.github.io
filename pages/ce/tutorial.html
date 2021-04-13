@@ -1,0 +1,344 @@
+<!doctype html>
+<html theme = "light-mode" onload = "handleCookies()">
+  <head>
+    <title>akzidenz :: CE/Quick Start</title>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="https://akzidenzgrotesk-py.github.io/resources/ag.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+		<script src="https://kit.fontawesome.com/ce3e267c9e.js" crossorigin="anonymous"></script>
+    <script src="https://akzidenzgrotesk-py.github.io/resources/scripts.js"></script>
+  </head>
+  <body>
+    <header id="top">
+      <button onclick="window.location.href = 'index.html';"><i class="fas fa-arrow-circle-left"></i></button>
+      <h1>ConsoleEngine</h1>
+      <h3>Quick Start Guide</h3>
+    </header>
+    <main>
+      <button class="toggledark" onclick="toggleDarkMode()"><i class="fas fa-adjust"></i></button>
+      <p>
+        <h3 id="toc">Table of Contents</h3>
+        <ol>
+          <li><a href="#toc">Table of Contents</a></li>
+          <li><a href="#ins">Installation</a></li>
+          <li><a href="#sti">Setup & Issues</a></li>
+          <li><a href="#uce">Using <code>ConsoleEngine</code></a></li>
+          <li><a href="#bfu">Basic Functions</a></li>
+          <li><a href="#inp">Inputs</a></li>
+          <li><a href="#spr">Sprites</a></li>
+          <li><a href="#asc">ANSI Sequences & Colour</a></li>
+          <li><a href="#con">Conclusion</a></li>
+          <li><a href="#cfu">ConsoleEngine Functions</a></li>
+        </ol>
+        <h3 id="ins">Installation</h3>
+        Download file <code><a href="index.html#get">ConsoleEngine.py</a></code> and <code><a href="index.html#get">SpriteEditor.py</a></code>
+        from the home page. <code>ConsoleEngine.py</code> and <code>SpriteEditor.py</code> into the directory where you would like to build your game.
+        <br/>
+        ConsoleEngine also requires <code><a href="https://pypi.org/project/keyboard/">keyboard</a>, <a href="https://pypi.org/project/mouse/">mouse</a></code> and <code><a href="https://numba.pydata.org/">numba</a></code>.
+        These can be installed through PyPI with <code>python -m pip install ...</code>
+
+        <br/>
+        <h3 id="sti">Setup & Issues</h3>
+        To setup your console so it always loads with the right font (a square one, e.g. <code>8x8</code> under <em>Raster Fonts</em>).
+        You also have to use this method if you want to use a window icon. This has only been tested on Windows.
+        <br/>
+        <b>(1)</b> Create a batch file (<code>.bat</code> or <code>.cmd</code>) with any name in the same directory as your ConsoleEngine program.
+        The batch file should simply just execute the Python program, like this:
+        <pre><code>
+<span class="line"><span class="key2">@echo</span> off</span>
+<span class="line"><span class="key2">python</span> <em>[program.py]</em></span>
+<span class="line"></span>
+<span class="line"><span class="key2">pause</span></span>
+        </code></pre>
+        A quick explanation, for those not skilled in batch.
+        <code>@echo off</code> disables batch from automatically printing the commands to the screen.
+        <code>python ...</code> executes the code.
+        Finally, <code>pause</code> stops the program at the end, just in case an error occurs.
+        This stops the program so you can read it.
+        <br/>
+        <b>(2)</b> After creating your batch file, create a shortcut of it.
+        Right click on the shortcut and <code>Properties -> Font</code>,
+        select the font you would like, at a small enough size that all of the characters fit in.
+        All of my programs are written for <code>8x8</code> Raster Font (under <em>Raster Fonts</em>).
+        <br/>
+        <b>(3)</b> Optionally, you can add an icon in <code>Properties -> Shortcut -> Change Icon...</code>.
+        <br/>
+        <br/>
+        There are so potential issues you can have setting up and using ConsoleEngine.
+        <ul>
+          <li><b>ANSI Sequences (color) is not working.</b>
+            You are most likely getting a console full of weird characters, brackets and numbers.
+            You need to enable ANSI sequences for your console.
+            ANSI sequences should already be enabled on most systems, except Windows.
+            On Windows 10, enable ANSI sequences with the Registry Editor.
+            Under HKCU (<code>HKEY_CURRENT_USER</code>) and in Console,
+            create a DWORD called "<code>VirtualTerminalLevel</code>" and set it to "<code>0x1</code>".
+            <br/>
+            Alternatively, you can use <code><a href="https://pypi.org/project/colorama/">colorama</a></code>
+            to enable ANSI sequences for Python exclusively.</li>
+            <li><b>The console is scrolling.</b>
+              Make your console bigger, if you can't, you are either using a font size that is too large
+              or <code>ConsoleGame.geometry</code> is too large.
+              <br/>
+              Also you can increase <code>ConsoleGame.safeSizing</code> (default 1).</li>
+        </ul>
+
+        <br/>
+        <h3 id="uce">Using <code>ConsoleEngine</code></h3>
+        First, you must <code><span class="key2">import</span> ConsoleEngine</code> and initialize it through
+        <code>master <span class="key2">=</span> ConsoleEngine.<span class="custom">ConsoleGame</span>()</code>.
+        <br/>
+        Next, decorate two functions with <code>ConsoleGame.<span class="custom">OnUserCreate</span>()</code> (executed once, at the start) and
+        <code>ConsoleGame.<span class="custom">OnUserUpdate</span>()</code> (executed once per frame).
+        Both of these functions pass <code>ConsoleGame</code> as a parameter, so don't forget to account for that in the decorated function.
+        There is no need to execute either of the functions, because they are executed automatically,
+        your code will most likely look like this:
+        <br/>
+        <pre><code>
+<span class="line"><span class="key2">import</span> ConsoleEngine</span>
+<span class="line">master <span class="key2">=</span> ConsoleEngine.<span class="custom">ConsoleGame</span>()</span>
+<span class="line"></span>
+<span class="line"><span class="custom">@master.OnUserCreate</span></span>
+<span class="line"><span class="key">def</span> <span class="custom">setup</span>(<span class="arg">self</span>):</span>
+<span class="line">  <span class="key2">pass</span></span>
+<span class="line"></span>
+<span class="line"><span class="custom">@master.OnUserUpdate</span></span>
+<span class="line"><span class="key">def</span> <span class="custom">loop</span>(<span class="arg">self</span>):</span>
+<span class="line">  <span class="key2">pass</span></span>
+        </code></pre>
+        Executing will result in a window called <code>ConsoleEngine: Console Game - FPS: ...</code>
+        which will be 100 by 100 characters.
+        <br/>
+        So, what can we do in each of the functions? In <code>ConsoleGame.<span class="custom">OnUserCreate</span>()</code>,
+        we can initialize our own variables and, we can customize our <code>ConsoleGame</code>.
+        <br/>
+        <b>Here is a complete list of the customizable settings:</b>
+        <ul>
+          <li><code>ConsoleGame.<span class="custom">title</span></code>: <em>string</em>, the title of your program, edits the window title.</li>
+          <li><code>ConsoleGame.<span class="custom">geometry</span></code>: <em>tuple[2]</em>, a tuple of the window size, in form (<code>width</code>, <code>height</code>)</li>
+          <li><code>ConsoleGame.<span class="custom">emptychar</span></code>: <em>char (string)</em>, the character used to clear the entire screen.</li>
+          <li><code>ConsoleGame.<span class="custom">colorsetting</span></code>: <em>string[2]</em>, background and foreground colour as hexadecimal, see <a href="https://www.robvanderwoude.com/ntcolor.php">here</a>.</li>
+          <li><code>ConsoleGame.<span class="custom">safeSizing</span></code>: <em>int</em>, amount of extra padding on the bottom and right sides of the window. This is used to stop overflow and scrolling (which breaks the engine).</li>
+          <li><code>ConsoleGame.<span class="custom">lettersize</span></code>: <em>tuple[2]</em>, size of the font used. This is only important for getting the mouse position.</li>
+          <li><code>ConsoleGame.<span class="custom">clear</span></code>: <em>boolean</em>, whether the screen should be automatically cleared.</li>
+        </ul>
+        <br/>
+        In <code>ConsoleGame.<span class="custom">OnUserUpdate</span>()</code>, we can execute functionalities and inputs. Let's look at a few features.
+        The rest can be found in the <a href="https://github.com/AkzidenzGrotesk-py/PythonProjects/blob/main/console/engine/DOC.md"><i class="fa fa-github"></i> Docs</a>.
+
+        <br/>
+        <h3 id="bfu">Basic Functions</h3>
+        Let's first look at the most basic drawing routine: <code>ConsoleGame.<span class="custom">Draw</span>()</code>.
+        This routine draws a "pixel" (character) at a certain position.
+        <code>Draw</code> takes 5 arguments, they are:
+        <ul>
+          <li><code><span class="custom">pos</span></code>: <em>tuple[2]</em>, the position as (<code>x</code>, <code>y</code>).</li>
+          <li><code><span class="custom">char</span> (default PIXEL_TYPE.<span class="custom">PIXEL_SOLID</span>)</code>: <em>string</em>, what to draw, multiple characters will be split over the adjacent (left) pixels/characters.</li>
+          <li><code><span class="custom">place</span> (default <span class="key2">True</span>)</code>: <em>boolean</em>, whether to place a character, or to check the pixel. <code>char</code> will now be the character to check for.</li>
+          <li><code><span class="custom">rawc</span> (default <span class="key2">False</span>)</code>: <em>boolean</em>, whether to draw the pixel raw. <em>soon to be deprecated</em></li>
+          <li><code><span class="custom">fsp</span> (default <span class="key2">False</span>)</code>: <em>boolean</em>, force single pixel, enabling this will disable the overflow into next pixels.</li>
+        </ul>
+        What does this look like in our previous code? Let's take a look.
+        <pre><code>
+<span class="line">...</span>
+<span class="line"><span class="custom">@master.OnUserUpdate</span></span>
+<span class="line"><span class="key">def</span> <span class="custom">loop</span>(<span class="arg">self</span>):</span>
+<span class="line">  self.<span class="custom">Draw</span>((<span class="key2">10</span>, <span class="key2">10</span>), <span class="string">"Hello, world!"</span>)</span>
+<span class="line">  <span class="comment"># Prints "Hello, world!" at 5,5</span></span>
+        </code></pre>
+        Enabling <code>fsp</code> will break the engine, in this case. If we want special characters, where do we get our them?
+        We can get our characters in the <code>ConsoleEngine.<span class="custom">PIXEL_TYPE</span></code>, these are:
+        <ul>
+          <li><code><span class="custom">PIXEL_SOLID</span></code>: █</li>
+          <li><code><span class="custom">PIXEL_THREEQUARTERS</span></code>: ▓</li>
+          <li><code><span class="custom">PIXEL_HALF</span></code>: ▒</li>
+          <li><code><span class="custom">PIXEL_QUARTER</span></code>: ░</li>
+        </ul>
+        Let's apply this to our code above:
+        <pre><code>
+<span class="line">...</span>
+<span class="line">  self.<span class="custom">Draw</span>((<span class="key2">15</span>, <span class="key2">15</span>), ConsoleEngine.PIXEL_TYPE.PIXEL_QUARTER)</span>
+        </code></pre>
+        <br/>
+        The <code>ConsoleGame.<span class="custom">DrawLine</span>()</code> routine is another primitive to use.
+        <code>DrawLine</code> has two positions (<code>pos1</code> and <code>pos2</code>, both <em>tuple[2]</em> as (<code>x</code>, <code>y</code>)), the character to draw the line in (<code>char</code> <em>string</em>) and the line's thickness (<code>thickness</code> <em>int</em>).
+        <pre><code>
+<span class="line">...</span>
+<span class="line">  self.<span class="custom">DrawLine</span>((<span class="key2">12</span>, <span class="key2">12</span>), (<span class="key2">49</span>, <span class="key2">49</span>), <span class="arg">thickness</span> <span class="key2">= 3</span>)</span>
+        </code></pre>
+        All the other drawing routines follow the same structure. We'll look at inputs, sprites and finally colour.
+
+        <br/>
+        <h3 id="inp">Inputs</h3>
+        We can get keyboard input using an implementation of <code>keyboard</code> using <code>ConsoleGame.<span class="custom">Keyboard</span>()</code>.
+        It takes one argument <code>key</code> and returns <span class="key2">True</span> if the key is held down.
+        <br/>
+        We can get the mouse position using an implementation of <code>mouse</code> using <code>ConsoleGame.<span class="custom">GetMousePos</span>()</code>.
+        This function is still not completed, so it is not recommended that you use it.
+
+        <br/>
+        <h3 id="spr">Sprites</h3>
+        Sprites are arrays of pixels to print.
+        It is most recommended that you use <code>SpriteEditor.py</code> to make sprites.
+        <code>ConsoleGame.<span class="custom">LoadSprite</span>()</code> can be used to load sprites, it returns a format that the sprite rasterizer can use.
+        It takes one argument <code>name</code>, which is the filename, removing the extension (.spr).
+        It is recommended that you load the sprites into a variable, so the file is only read once.
+        Sprites can be rasterized with <code>ConsoleGame.<span class="custom">DrawSprite</span>()</code> which draws sprite <code>chararray</code> at position <code>pos</code>.
+        <br/>
+        <em>*The position <code>pos</code> argument must come first.</em>
+        <br/>
+        So what does a sprite look like? Well, let's see!
+        <pre><code>
+<span class="line">[</span>
+<span class="line">  [<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">"#"</span>,<span class="string">""</span>],</span>
+<span class="line">  [<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">"#"</span>],</span>
+<span class="line">  [<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">"#"</span>],</span>
+<span class="line">  [<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">"#"</span>],</span>
+<span class="line">  [<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">""</span>],</span>
+<span class="line">  [<span class="string">""</span>,<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">""</span>],</span>
+<span class="line">  [<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">"#"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>]</span>
+<span class="line">]</span>
+        </code></pre>
+        Each cell here is a pixel to display.
+        This 7x7 heart is very simple and uncoloured, but sprites can be quite complicated.
+        The <code>""</code> tells the sprite rasterizer to render nothing in that slot.
+        <br/>
+        I recommend using variables to clean up the sprite to look much cleaner.
+        <pre><code>
+<span class="line">h <span class="key2">=</span> <span class="string">"#"</span></span>
+<span class="line">s <span class="key2">=</span> <span class="string">""</span></span>
+<span class="line">spr <span class="key2">=</span> [</span>
+<span class="line">  [s,h,h,s,h,h,s],</span>
+<span class="line">  [h,s,s,s,s,s,h],</span>
+<span class="line">  [h,s,s,s,s,s,h],</span>
+<span class="line">  [h,s,s,s,s,s,h],</span>
+<span class="line">  [s,h,s,s,s,h,s],</span>
+<span class="line">  [s,s,h,s,h,s,s],</span>
+<span class="line">  [s,s,s,h,s,s,s]</span>
+<span class="line">]</span>
+<span class="line"></span>
+<span class="line">...</span>
+<span class="line">  self.<span class="custom">DrawSprite</span>((<span class="key2">1</span>, <span class="key2">1</span>), spr)</span>
+        </code></pre>
+        But, were clearly missing a certain piece; colour.
+
+        <br/>
+        <h3 id="asc">ANSI Sequences & Colour</h3>
+        Applying colour in ConsoleEngine is a little janky, but can be perfectly stable if done well.
+        Sadly, ANSI sequences are not very well written, so using them can slow down your game.
+        These can be accessed in the <code>ConsoleEngine.<span class="custom">FORMAT</span></code> class.
+        The names are pretty self explanitory:
+        <pre><code>
+<span class="line">RESET<span class="key2">=</span>              <span class="string">"\033[0m"</span></span>
+<span class="line">UNDERLINE<span class="key2">=</span>          <span class="string">"\033[4m"</span></span>
+<span class="line">NOUNDERLINE<span class="key2">=</span>        <span class="string">"\033[24m"</span></span>
+<span class="line">BOLD<span class="key2">=</span>               <span class="string">"\033[1m"</span></span>
+<span class="line">NOBOLD<span class="key2">=</span>             <span class="string">"\033[22m"</span></span>
+<span class="line">NEGATIVE<span class="key2">=</span>           <span class="string">"\033[7m"</span></span>
+<span class="line">POSITIVE<span class="key2">=</span>           <span class="string">"\033[27m"</span></span>
+<span class="line">FG_BLACK<span class="key2">=</span>           <span class="string">"\033[30m"</span></span>
+<span class="line">FG_DARK_BLUE<span class="key2">=</span>       <span class="string">"\033[34m"</span></span>
+<span class="line">FG_DARK_GREEN<span class="key2">=</span>      <span class="string">"\033[32m"</span></span>
+<span class="line">FG_DARK_CYAN<span class="key2">=</span>       <span class="string">"\033[36m"</span></span>
+<span class="line">FG_DARK_RED<span class="key2">=</span>        <span class="string">"\033[31m"</span></span>
+<span class="line">FG_DARK_MAGENTA<span class="key2">=</span>    <span class="string">"\033[35m"</span></span>
+<span class="line">FG_DARK_YELLOW <span class="key2">=</span>    <span class="string">"\033[33m"</span></span>
+<span class="line">FG_BBLACK<span class="key2">=</span>          <span class="string">"\033[90m"</span></span>
+<span class="line">FG_BLUE<span class="key2">=</span>            <span class="string">"\033[94m"</span></span>
+<span class="line">FG_GREEN<span class="key2">=</span>           <span class="string">"\033[92m"</span></span>
+<span class="line">FG_CYAN<span class="key2">=</span>            <span class="string">"\033[96m"</span></span>
+<span class="line">FG_RED<span class="key2">=</span>             <span class="string">"\033[91m"</span></span>
+<span class="line">FG_MAGENTA<span class="key2">=</span>         <span class="string">"\033[95m"</span></span>
+<span class="line">FG_YELLOW<span class="key2">=</span>          <span class="string">"\033[93m"</span></span>
+<span class="line">FG_WHITE<span class="key2">=</span>           <span class="string">"\033[37m"</span></span>
+<span class="line">BG_BLACK<span class="key2">=</span>           <span class="string">"\033[40m"</span></span>
+<span class="line">BG_DARK_BLUE<span class="key2">=</span>       <span class="string">"\033[44m"</span></span>
+<span class="line">BG_DARK_GREEN<span class="key2">=</span>      <span class="string">"\033[42m"</span></span>
+<span class="line">BG_DARK_CYAN<span class="key2">=</span>       <span class="string">"\033[46m"</span></span>
+<span class="line">BG_DARK_RED<span class="key2">=</span>        <span class="string">"\033[41m"</span></span>
+<span class="line">BG_DARK_MAGENTA<span class="key2">=</span>    <span class="string">"\033[45m"</span></span>
+<span class="line">BG_DARK_YELLOW<span class="key2">=</span>     <span class="string">"\033[43m"</span></span>
+<span class="line">BG_BBLACK<span class="key2">=</span>          <span class="string">"\033[100m"</span></span>
+<span class="line">BG_BLUE<span class="key2">=</span>            <span class="string">"\033[104m"</span></span>
+<span class="line">BG_GREEN<span class="key2">=</span>           <span class="string">"\033[102m"</span></span>
+<span class="line">BG_CYAN<span class="key2">=</span>            <span class="string">"\033[106m"</span></span>
+<span class="line">BG_RED<span class="key2">=</span>             <span class="string">"\033[101m"</span></span>
+<span class="line">BG_MAGENTA<span class="key2">=</span>         <span class="string">"\033[105m"</span></span>
+<span class="line">BG_YELLOW<span class="key2">=</span>          <span class="string">"\033[103m"</span></span>
+<span class="line">BG_WHITE<span class="key2">=</span>           <span class="string">"\033[47m"</span></span>
+        </code></pre>
+        These can be applied to pixels using the <code>Draw</code> routine.
+        You must enable <code>fsp</code>, because ANSI sequences are interpreted as their own characters,
+        even though they display as one. You can also do custom colors with <code>FG_RGB()</code> and <code>BG_RGB()</code>.
+        <br/>
+        <b>How do you apply ANSI sequences?</b> Just concatenate to your string,
+        for example <code>FORMAT.<span class="custom">FG_RED</span> + PIXEL_TYPE.<span class="custom">PIXEL_SOLID</span> + FORMAT.<span class="custom">RESET</span></code>
+        <br/><br/>
+        <b>Important!</b>
+        <ul>
+          <li>Always use <code>FORMAT.RESET</code> at the end of formatted strings.</li>
+          <li>If you want to use coloured text, you should use the <code>DrawText()</code> routine and not <code>Draw()</code>.</li>
+        </ul>
+        For sprites, again, I recommend using the sprite editor.
+        You can use the methods shown in <em>Sprites</em> to apply colour through concatenation.
+        <br/>
+        <h3 id="con">Conclusion</h3>
+        This guide only looked into the basic, but the rest is easily found on the
+        <a href="https://github.com/AkzidenzGrotesk-py/PythonProjects/blob/main/console/engine/DOC.md"><i class="fa fa-github"></i> Docs</a>.
+        There will be a few more features added to this engine over time, based on what I feel like adding.
+        You can see an example program Snake 🐍 built with ConsoleEngine below,
+        it was built before <code>SpriteEditor.py</code> was built, so sprites are made manually.
+        <div class="buttonlinks">
+          <a href="https://github.com/AkzidenzGrotesk-py/PythonProjects/blob/main/console/engine/game/snake.py">Snake 🐍</a>
+        </div>
+
+        <br/>
+        <h3 id="cfu">ConsoleEngine Functions</h3>
+        <ul>
+          <li><code><em><span class="key">class:</span></em> FORMAT</code> - Tools for pixel/character formatting</li>
+          <li><code><em><span class="key">class:</span></em> PIXEL_TYPE</code> - Tools for getting different special characters</li>
+          <li><code><em><span class="key">class:</span></em> DEBUG</code> - Debug functions, mostly to do with other ANSI sequences</li>
+          <li><code><em><span class="key">class:</span></em> UI</code> - UI functions</li>
+          <li><code><em><span class="key">class:</span></em> UI.xInput</code> - a slightly more typical implementation of inputs</li>
+          <li><code><em><span class="key">class:</span></em> ConsoleGame</code> - the main ConsoleEngine class</li>
+          <li><code><em><span class="key">func:</span></em> jitBresenham</code> - Bresenham line drawing algorithm</li>
+          <li><code><em><span class="key">func:</span></em> jitMidPointCircle</code> - Mid point circle algorithm for drawing circles</li>
+          <li><code><em><span class="key">func:</span></em> jitFillCircleWithEdge</code> - Algorithm to fill circle with edges</li>
+          <li><code><em><span class="key">func:</span></em> jitFillBottomFlatTriangle</code> - Algorithm to fill a triangle with a flat bottom</li>
+          <li><code><em><span class="key">func:</span></em> jitFillTopFlatTriangle</code> - Algorithm to fill a triangle with a flat top</li>
+          <li><code><em><span class="key">func:</span></em> UI.xInput.Handle</code> - xInput handling</li>
+          <li><code><em><span class="key">func:</span></em> UI.xInput.GetText</code> - returns text held in the input</li>
+          <li><code><em><span class="key">func:</span></em> UI.Input</code> - a ConsoleEngine implementation of the <code>input()</code> function</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.OnUserCreate</code> - on create</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.OnUserUpdate</code> - on frame</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.LoadSprite</code> - load sprite files</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.StringToSprite</code> - older method of creating coloured text</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.RootArray</code> - replace the entire screen array</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.Keyboard</code> - get keyboard input</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.GetMousePos</code> - get mouse position</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.Draw</code> - pixel drawing/checking routine</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawRawLine</code> - draw 1px wide line (slightly faster)</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawLine</code> - draw line with thickness</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawBox</code> - draw a rectangle</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawEdgeBox</code> - draw a rectangle with pipe characters</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawTriangle</code> - draw a triangle</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawSprite</code> - draw sprites</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawCircle</code> - draw circle</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawPolygon</code> - draw long line with multiple points</li>
+          <li><code><em><span class="key">func:</span></em> ConsoleGame.DrawText</code> - draw text (with formatting)</li>
+        </ul>
+      </p>
+    </main>
+    <footer>
+			<div class="copy">© akzidenz (sky coleman) 2021</div>
+			<div class="linklist">
+				<ul>
+					<li><a href="https://steamcommunity.com/id/akzidenzgrotesk"><i class="fa fa-steam"></i> Steam</a></li>
+					<li><a href="https://github.com/AkzidenzGrotesk-py"><i class="fa fa-github"></i> GitHub</a></li>
+					<li><a href="https://akzidenzgrotesk-py.github.io/webindex.html"><i class="fa fa-bars"></i> Page Index</a></li>
+				</ul>
+			</div>
+		</footer>
+  </body>
+</html>

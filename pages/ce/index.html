@@ -1,0 +1,96 @@
+<!doctype html>
+<html theme = "light-mode" onload = "handleCookies()">
+  <head>
+    <title>akzidenz :: ConsoleEngine</title>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="https://akzidenzgrotesk-py.github.io/resources/ag.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+		<script src="https://kit.fontawesome.com/ce3e267c9e.js" crossorigin="anonymous"></script>
+    <script src="https://akzidenzgrotesk-py.github.io/resources/scripts.js"></script>
+  </head>
+  <body>
+    <header>
+      <button onclick="window.location.href = 'https://akzidenzgrotesk-py.github.io/index.html';"><i class="fas fa-arrow-circle-left"></i></button>
+      <h1>ConsoleEngine</h1>
+      <h3>Make games in the console.</h3>
+      <a href="#get">Check it out!</a>
+    </header>
+    <main>
+      <button class="toggledark" onclick="toggleDarkMode()"><i class="fas fa-adjust"></i></button>
+      <p>
+        Requires <code><a href="https://pypi.org/project/keyboard/">keyboard</a>, <a href="https://pypi.org/project/mouse/">mouse</a>, <a href="https://numba.pydata.org/">numba</a></code>
+        <br/>
+        <code>ConsoleEngine.py</code> is an adaptation of javidx9's <a href="https://github.com/OneLoneCoder/videos/blob/master/olcConsoleGameEngine.h">olcConsoleGameEngine</a> in Python3.
+        It contains line, circle, rectangle, triangle and sprite rasterizers and supports colour and keyboard control.
+        ConsoleEngine contains two main tools: <code>ConsoleEngine.py</code> and <code>SpriteEditor.py</code>.
+        <br/>
+        ConsoleEngine is simple to set up and write with. No arduous initializations or anything.
+        Just import, initialize, decorate and customize! No need for OOP, as you can write directly to the master object.
+        The simple <a href="tutorial.html">quick start tutorial</a> will get you started on using <code>ConsoleEngine.py</code>.
+        <br/>
+        <br/>
+        <b>Take a look of an implementation with ConsoleEngine</b>, here is a sample:
+        <br/>
+        <pre><code>
+<span class="line"><span class="key2">import</span> ConsoleEngine</span>
+<span class="line">master <span class="key2">=</span> ConsoleEngine.<span class="custom">ConsoleGame</span>()</span>
+<span class="line"></span>
+<span class="line"><span class="custom">@master.OnUserCreate</span></span>
+<span class="line"><span class="key">def</span> <span class="custom">setup</span>(<span class="arg">self</span>):</span>
+<span class="line">  self.title <span class="key2">=</span> <span class="string">"My Game!"</span></span>
+<span class="line">  self.geometry <span class="key2">=</span> (<span class="key">150</span>, <span class="key">150</span>)</span>
+<span class="line">  self.player <span class="key2">=</span> (<span class="key">0</span>, <span class="key">0</span>)</span>
+<span class="line"></span>
+<span class="line"><span class="custom">@master.OnUserUpdate</span></span>
+<span class="line"><span class="key">def</span> <span class="custom">loop</span>(<span class="arg">self</span>):</span>
+<span class="line">  <span class="key2">if</span> self.<span class="custom">Keyboard</span>(<span class="string">"w"</span>): self.player[<span class="key">1</span>] <span class="key2">-=</span> <span class="key">10</span> <span class="key2">*</span> self.fElapsedTime</span>
+<span class="line">  <span class="key2">if</span> self.<span class="custom">Keyboard</span>(<span class="string">"s"</span>): self.player[<span class="key">1</span>] <span class="key2">+=</span> <span class="key">10</span> <span class="key2">*</span> self.fElapsedTime</span>
+<span class="line">  <span class="key2">if</span> self.<span class="custom">Keyboard</span>(<span class="string">"a"</span>): self.player[<span class="key">0</span>] <span class="key2">-=</span> <span class="key">10</span> <span class="key2">*</span> self.fElapsedTime</span>
+<span class="line">  <span class="key2">if</span> self.<span class="custom">Keyboard</span>(<span class="string">"d"</span>): self.player[<span class="key">0</span>] <span class="key2">+=</span> <span class="key">10</span> <span class="key2">*</span> self.fElapsedTime</span>
+<span class="line"></span>
+<span class="line">  self.<span class="custom">Draw</span>(self.player, <span class="string">"P"</span>)</span>
+        </code></pre>
+      </p>
+      <hr />
+      <h3 id="get">Get <code>ConsoleEngine.py</code></h3>
+      <div class="buttonlinks">
+        <a href="https://raw.githubusercontent.com/AkzidenzGrotesk-py/PythonProjects/main/console/engine/ConsoleEngine.py">Download <code>ConsoleEngine.py</code></a>
+      </div>
+      <p>
+        <b>ConsoleEngine</b> features include functions to draw, such as <code>Draw, DrawLine, DrawCircle, DrawBox, DrawTriangle, DrawText, DrawSprite, DrawPolygon</code> and <code>DrawEdgeBox</code> to draw to the screen.
+        Input with ConsoleEngine can be got with <code>Keyboard</code> and <code>GetMousePos</code>.
+        Also features sprite loading with <code>LoadSprite</code> and decorators <code>OnUserCreate</code> and <code>OnUserUpdate</code>.
+        <br/>
+      </p>
+      <h3 id="gets">Get <code>SpriteEditor.py</code></h3>
+      <div class="buttonlinks">
+        <a href="https://raw.githubusercontent.com/AkzidenzGrotesk-py/PythonProjects/main/console/engine/SpriteEditor.py">Download <code>SpriteEditor.py</code></a>
+      </div>
+      <p>
+        <b>SpriteEditor</b> is a simple sprite editor that imports and exports <code>.spr</code> sprite files that can be loaded with <code>LoadSprite</code>.
+        This tool makes it very easy to create sprites for ConsoleEngine up to 150 by 100 characters with full colour support and custom characters.
+      </p>
+      <hr />
+      <h3 id="get">Get Started Using <code>ConsoleEngine</code></h3>
+      I've made a simple implementation of <a href="https://github.com/AkzidenzGrotesk-py/PythonProjects/blob/main/console/engine/game/snake.py">Snake 🐍</a> with ConsoleEngine,
+      alongside the <a href="#gets">SpriteEditor 🖊️</a>.
+      <div class="buttonlinks">
+        <a href="tutorial.html"><i class="fas fa-file-code"></i>&nbsp; <code>ConsoleEngine</code> Quick Tutorial</a>
+      </div>
+      <div class="buttonlinks">
+        <a href="https://github.com/AkzidenzGrotesk-py/PythonProjects/blob/main/console/engine/DOC.md"><i class="fa fa-github"></i>&nbsp; <code>ConsoleEngine</code> Docs</a>
+      </div>
+    </main>
+    <footer>
+			<div class="copy">© akzidenz (sky coleman) 2021</div>
+			<div class="linklist">
+				<ul>
+					<li><a href="https://steamcommunity.com/id/akzidenzgrotesk"><i class="fa fa-steam"></i> Steam</a></li>
+					<li><a href="https://github.com/AkzidenzGrotesk-py"><i class="fa fa-github"></i> GitHub</a></li>
+					<li><a href="https://akzidenzgrotesk-py.github.io/webindex.html"><i class="fa fa-bars"></i> Page Index</a></li>
+				</ul>
+			</div>
+		</footer>
+  </body>
+</html>
